@@ -1,0 +1,14 @@
+.caseFeu{
+    height: 60px;
+    width: 60px;
+    margin: 20px;
+    border:solid;
+    border-color:black;
+    border-radius:30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#feuHaut{
+    background-color: red;
+}
