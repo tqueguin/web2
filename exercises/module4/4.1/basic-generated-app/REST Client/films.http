@@ -11,7 +11,10 @@ Content-Type: application/json
 
 {
     "title":"Star Wars",
-    "duration": 134,
+    "duration": 130,
     "budget": 40000,
     "link": "https://www.imdb.com/title/starwars/"
 }
+
+### Delete film identified by 2
+DELETE {{baseUrl}}/films/2

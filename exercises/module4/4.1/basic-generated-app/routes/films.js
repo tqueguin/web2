@@ -48,6 +48,7 @@ router.post('/', (req, res) => {
     console.log('POST /films');
 
     if (!title || !duration || !budget || !link) return res.sendStatus(400); // error code '400 Bad request'
+    if (typeof(duration) !== "number" || typeof(budget) !== "number" || duration <= 0 || budget <= 0) return res.sendStatus(400);
 
     const lastItemIndex = FILMS?.length !== 0 ? FILMS.length - 1 : undefined;
     const lastId = lastItemIndex !== undefined ? FILMS[lastItemIndex]?.id : 0;
@@ -74,7 +75,7 @@ router.delete('/:id', (req, res) => {
   
     if (foundIndex < 0) return res.sendStatus(404);
   
-    const filmsRemovedFromFilms = MENU.splice(foundIndex, 1);
+    const filmsRemovedFromFilms = FILMS.splice(foundIndex, 1);
     const filmRemoved = filmsRemovedFromFilms[0];
   
     res.json(filmRemoved);
