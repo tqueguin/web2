@@ -1,0 +1,20 @@
+### Read all films with File variable
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/films
+
+### Read all films over 100 minutes
+GET {{baseUrl}}/films?minimum-duration=100
+
+### Create a film
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+    "title":"Star Wars",
+    "duration": 130,
+    "budget": 40000,
+    "link": "https://www.imdb.com/title/starwars/"
+}
+
+### Delete film identified by 2
+DELETE {{baseUrl}}/films/2
