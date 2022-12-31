@@ -1,9 +1,11 @@
 import HomePage from '../Pages/HomePage';
-import NewPage from '../Pages/NewPage';
+import CreatePage from '../Pages/CreatePage';
+import ViewPage from '../Pages/ViewPage';
 
 const routes = {
   '/': HomePage,
-  '/new': NewPage,
+  '/create': CreatePage,
+  '/view': ViewPage,
 };
 
 export default routes;
