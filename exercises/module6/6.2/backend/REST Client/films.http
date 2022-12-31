@@ -2,6 +2,10 @@
 @baseUrl = http://localhost:3000
 GET {{baseUrl}}/films
 
+### Read one film with ID 8
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/films/8
+
 ### Read all films over 100 minutes
 GET {{baseUrl}}/films?minimum-duration=100
 
@@ -19,4 +23,12 @@ Content-Type: application/json
 ### Delete film identified by 2
 DELETE {{baseUrl}}/films/2
 
-### Update film identified by 3
+
+### Update the film identified by 8
+PATCH {{baseUrl}}/films/8
+Content-Type: application/json
+
+{
+    "title":"Avatar 2",
+    "duration":155
+}
