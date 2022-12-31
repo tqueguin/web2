@@ -1,6 +1,6 @@
 const HomePage = () => {
-  const main = document.getElementById('mainContent');
-  main.innerHTML = 'Deal with the content of your HomePage';
+  const main = document.querySelector('main');
+  main.innerHTML = 'Welcome to myMovies';
 };
 
 export default HomePage;

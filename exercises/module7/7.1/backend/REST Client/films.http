@@ -9,7 +9,32 @@ GET {{baseUrl}}/films/8
 ### Read all films over 100 minutes
 GET {{baseUrl}}/films?minimum-duration=100
 
-### Create a film
+
+### Create a film by using the admin account
+#### First login as the admin
+##### Define a request variable nammed admin :
+# @name admin
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"admin"
+}
+#### Create a film with the admin token
+POST {{baseUrl}}/films
+Content-Type: application/json
+Authorization: {{admin.response.body.token}}
+
+{
+    "title":"Star Wars",
+    "duration": 130,
+    "budget": 40000,
+    "link": "https://www.imdb.com/title/starwars/"
+}
+
+
+### 1. Create a film without a token
 POST {{baseUrl}}/films
 Content-Type: application/json
 
@@ -20,13 +45,44 @@ Content-Type: application/json
     "link": "https://www.imdb.com/title/starwars/"
 }
 
-### Delete film identified by 2
-DELETE {{baseUrl}}/films/2
+### 2. Create a film without being the admin, use manager account
+#### 2.1 First login as the manager
+##### 2.1.1 Define a request variable nammed manager
+# @name manager
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"manager",
+    "password":"manager"
+}
+
+##### 2.1.2 Define a file variable to simplify the access to the token of manager
+@managerToken = {{manager.response.body.token}}
+
+#### 2.2 Try to create a film with the manager token
+POST {{baseUrl}}/film
+Content-Type: application/json
+Authorization: {{managerToken}}
+
+{
+    "title":"Star Wars",
+    "duration": 130,
+    "budget": 40000,
+    "link": "https://www.imdb.com/title/starwars/"
+}
+
+
+
+### Delete film identified by 15
+DELETE {{baseUrl}}/films/15
+Authorization: {{admin.response.body.token}}
 
 
 ### Update the film identified by 8
 PATCH {{baseUrl}}/films/8
 Content-Type: application/json
+Authorization: {{admin.response.body.token}}
 
 {
     "title":"Avatar 2",

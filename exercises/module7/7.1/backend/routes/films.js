@@ -2,11 +2,13 @@
 const path = require('node:path');
 const express = require('express');
 const { serialize, parse } = require('../utils/json');
+const { authorize } = require('../utils/auths');
 
 const router = express.Router();
 
 const jsonDbPath = path.join(__dirname, '/../data/films.json');
 
+// Default film list
 const FILMS = [
     {
         id: 1,
@@ -17,7 +19,7 @@ const FILMS = [
     },
 ];
 
-// READ ALL (FILTERED)
+// Read all films (possibly filtered by minimum duration)
 router.get('/', (req, res) => {
     console.log('GET /films');
     const minimumDuration =
@@ -38,7 +40,7 @@ router.get('/', (req, res) => {
 });
 
 
-// READ ONE
+// Read a film based on its ID
 router.get('/:id', (req, res) => {
     console.log(`GET /films/${req.params.id}`);
     const films = parse(jsonDbPath, FILMS);
@@ -49,8 +51,8 @@ router.get('/:id', (req, res) => {
 });
 
 
-// CREATE ONE
-router.post('/', (req, res) => {
+// Create a film
+router.post('/', authorize, (req, res) => {
     const title = req?.body?.title?.length !== 0 ? req.body.title : undefined;
     const duration = req?.body?.duration?.length !== 0 ? req.body.duration : undefined;
     const budget = req?.body?.budget?.length !== 0 ? req.body.budget : undefined;
@@ -81,8 +83,9 @@ router.post('/', (req, res) => {
     return res.json(newFilm);
 });
 
-// DELETE ONE
-router.delete('/:id', (req, res) => {
+
+// Delete a film
+router.delete('/:id', authorize, (req, res) => {
     console.log(`DELETEee /films/${req.params.id}`);
     
     const films = parse(jsonDbPath, FILMS);
@@ -101,9 +104,9 @@ router.delete('/:id', (req, res) => {
 });
 
 
-// UPDATE ONE
+// Update a film
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', authorize, (req, res) => {
     console.log(`PATCH /films/${req.params.id}`);
 
 

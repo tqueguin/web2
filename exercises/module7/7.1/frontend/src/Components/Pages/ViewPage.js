@@ -1,4 +1,5 @@
 import { clearPage } from '../../utils/render';
+import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
 
 
 const ViewPage = async () => {
@@ -6,7 +7,7 @@ const ViewPage = async () => {
     clearPage();
 
     const films = await getAllFilms();
-    document.getElementById('mainContent').appendChild(createMovieTable(films));
+    document.querySelector('main').appendChild(createMovieTable(films));
   } catch (err) {
     console.error('ViewPage::error: ', err);
   }
@@ -46,7 +47,9 @@ function createMovieTable(films) {
   tableTitles.appendChild(title4);
   const title5 = document.createElement("th");
   title5.innerText = "Operations";
-  tableTitles.appendChild(title5);
+  if(isAuthenticated()){
+    tableTitles.appendChild(title5);
+  }
   thead.appendChild(tableTitles);
   table.appendChild(thead);
 
@@ -81,7 +84,9 @@ function createMovieTable(films) {
     saveButton.addEventListener("click", saveOneMovie);
     operations.appendChild(deleteButton);
     operations.appendChild(saveButton);
-    line.appendChild(operations);
+    if(isAuthenticated()){
+      line.appendChild(operations);
+    }
 
     tbody.appendChild(line);
   });
@@ -92,11 +97,14 @@ function createMovieTable(films) {
 async function deleteOneMovie(e) {
   const movieId = e.target.id;
 
+  const authenticatedUser = getAuthenticatedUser();
+
   try {
     const options = {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authenticatedUser.token,
       },
     };
 
@@ -121,6 +129,7 @@ async function saveOneMovie(e) {
   const duration = td.children[2].innerText;
   const budget = td.children[3].innerText;
 
+  const authenticatedUser = getAuthenticatedUser();
 
   try {
     const options = {
@@ -133,6 +142,7 @@ async function saveOneMovie(e) {
       }),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: authenticatedUser.token,
       },
     };
 

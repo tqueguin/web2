@@ -1,6 +1,7 @@
 const clearPage = () => {
-  const main = document.getElementById('mainContent');
+  const main = document.querySelector('main');
   main.innerHTML = '';
+  
 };
 
 const renderPageTitle = (title) => {

@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const usersRouter = require('./routes/users');
 const filmsRouter = require('./routes/films');
+const authsRouter = require('./routes/auths');
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use(cookieParser());
 
 app.use('/users', usersRouter);
 app.use('/films', filmsRouter);
+app.use('/auths', authsRouter);
 
 module.exports = app;
