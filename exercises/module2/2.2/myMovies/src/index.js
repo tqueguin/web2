@@ -10,7 +10,7 @@ renderImageInMain(jp);
 addTextInMain("Welcome to myMovies")
 
 function renderImageInMain(imageName) {
-  const image = new Image(); // or document.createElement('img');
+  const image = document.createElement('img');
   image.src = imageName;
   image.height = 150;
   const main = document.querySelector('main');

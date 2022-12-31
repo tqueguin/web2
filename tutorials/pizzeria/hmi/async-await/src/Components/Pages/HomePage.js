@@ -22,11 +22,7 @@ const HomePage = async () => {
   try {
     clearPage();
 
-    const response = await fetch('/api/pizzas');
-
-    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-
-    const pizzas = await response.json();
+    const pizzas = await getAllPizzas();
 
     renderMenuFromString(pizzas);
     attachOnMouseEventsToGoGreen();
@@ -136,5 +132,22 @@ function getDrinksTableAsNode(drinks) {
 
   return tableWrapper;
 }
+
+
+async function getAllPizzas() {
+  try {
+    const response = await fetch('/api/pizzas');
+
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+
+    const pizzas = await response.json();
+
+    return pizzas;
+  } catch (err) {
+    console.error('getAllPizzas::error: ', err);
+    throw err;
+  }
+}
+
 
 export default HomePage;
